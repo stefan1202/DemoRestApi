@@ -17,10 +17,17 @@ public class DataInitializer implements CommandLineRunner {
                 .name("Tudor")
                 .age(30)
                 .build();
+        Person p2 = Person.builder()
+                .name("Tudor")
+                .age(60)
+                .build();
+        Person p3 = Person.builder()
+                .name("Alex")
+                .age(30)
+                .build();
         personRepository.save(p1);
-
-        p1.setAge(45);
-        personRepository.save(p1);
+        personRepository.save(p2);
+        personRepository.save(p3);
 
 
     }
