@@ -19,6 +19,16 @@
           </div>
           
       </div>
+    <div class="row">
+        <div class="col-4" th:each="pers: ${listOfPeople}">
+            <p th:text="${pers}"></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-1" th:each="pers: ${listOfAges}">
+            <p th:text="${pers}"></p>
+        </div>
+    </div>
 </div>
 
 </body>
