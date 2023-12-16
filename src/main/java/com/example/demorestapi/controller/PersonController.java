@@ -18,16 +18,20 @@ public class PersonController {
 
     @GetMapping
     public List<Person> getAllPersons(){
-        return (List<Person>) personRepository.findAll();
+        return personRepository.findAll();
     }
 
     @GetMapping("{name}")
     public List<Person> getAllPersonsByName(@PathVariable String name){
-        return (List<Person>) personRepository.findAllByNameIgnoreCase(name);
+        return personRepository.findAllByNameIgnoreCase(name);
     }
 
     @GetMapping("/contains/{name}")
     public List<Person> getAllPersonsByContainingName(@PathVariable String name){
-        return (List<Person>) personRepository.findAllByNameContainingIgnoreCase(name);
+        return personRepository.findAllByNameContainingIgnoreCase(name);
+    }
+    @GetMapping("/age/{age}")
+    public List<Person> getAllPersonsByContainingName(@PathVariable int age){
+        return  personRepository.customFindingMethod(age);
     }
 }
