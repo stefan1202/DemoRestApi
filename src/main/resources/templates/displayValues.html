@@ -29,6 +29,11 @@
             <p th:text="${pers}"></p>
         </div>
     </div>
+    <div class="row">
+        <div class="col-4">
+            <img th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Image added"/>
+        </div>
+    </div>
 </div>
 
 </body>
