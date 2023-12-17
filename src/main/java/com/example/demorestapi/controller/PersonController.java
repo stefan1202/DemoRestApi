@@ -1,7 +1,9 @@
 package com.example.demorestapi.controller;
 
 import com.example.demorestapi.entities.Person;
+import com.example.demorestapi.model.UserDto;
 import com.example.demorestapi.repositories.PersonRepository;
+import com.example.demorestapi.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("/person")
 public class PersonController {
     private final PersonRepository personRepository;
+
+    private final UserService userService;
 
     @GetMapping
     public List<Person> getAllPersons(){
@@ -33,5 +37,10 @@ public class PersonController {
     @GetMapping("/age/{age}")
     public List<Person> getAllPersonsByContainingName(@PathVariable int age){
         return  personRepository.customFindingMethod(age);
+    }
+
+    @GetMapping("users")
+    public List<UserDto> getAllUsers(){
+        return userService.findAll();
     }
 }

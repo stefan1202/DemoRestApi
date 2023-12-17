@@ -1,7 +1,9 @@
 package com.example.demorestapi;
 
 import com.example.demorestapi.entities.Person;
+import com.example.demorestapi.model.UserDto;
 import com.example.demorestapi.repositories.PersonRepository;
+import com.example.demorestapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -10,9 +12,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DataInitializer implements CommandLineRunner {
     private final PersonRepository personRepository;
+    private final UserService userService;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Person p1 = Person.builder()
                 .name("Tudor")
                 .age(30)
@@ -29,6 +32,18 @@ public class DataInitializer implements CommandLineRunner {
         personRepository.save(p2);
         personRepository.save(p3);
 
+        UserDto user= UserDto.builder()
+                .username("ironman")
+                .password("password")
+                .role("ADMIN")
+                .build();
+        UserDto user2= UserDto.builder()
+                .username("spiderman")
+                .password("password")
+                .role("SPIDER")
+                .build();
+    userService.createUser(user);
+    userService.createUser(user2);
 
     }
 }
