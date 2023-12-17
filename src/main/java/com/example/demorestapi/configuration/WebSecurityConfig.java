@@ -30,12 +30,12 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((req) -> req.requestMatchers("/ui**").authenticated()
-                .requestMatchers("/person","/person/**").permitAll()
-                .requestMatchers("/controller","/controller/hello","/controller/**").hasRole("ADMIN")
-                .anyRequest().authenticated())
-                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .httpBasic(withDefaults())
-                .csrf(AbstractHttpConfigurer::disable)
+                .requestMatchers("/person","/person/**").permitAll()   //allows all to access urls like person or whatever comes after person (**)
+                .requestMatchers("/controller","/controller/hello","/controller/**").hasRole("ADMIN") //allows only users that have ADMIN role
+                .anyRequest().authenticated()) //any other request must be accessed by a logged-in user
+                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll) // allows all users to access login page
+                .httpBasic(withDefaults()) //enables basic authentication
+                .csrf(AbstractHttpConfigurer::disable) //disable csrf
 //                .cors(AbstractHttpConfigurer::disable);//not recommended for PROD
                 .cors((cors)->cors.configurationSource(corsConfigSource()));
 
@@ -43,6 +43,14 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+    /**
+     * Creates a specific configuration for CORS. This configuration allows Angular to connect to a different backend
+     * Defines methods allowed for CORS
+     * Defines headers exposed
+     * Defines allowed headers
+     * Defines on which urls this configuration applies to
+     * @return configuration
+     */
     @Bean
     CorsConfigurationSource corsConfigSource(){
         CorsConfiguration config= new CorsConfiguration();
@@ -55,6 +63,11 @@ public class WebSecurityConfig {
         return source;
     }
 
+    /**
+     * Creates a bean which uses a specific UserDetailsService (loads from DB)
+     * Sets a specific password encoder to be used for this authenticationProvider
+     * @return provider
+     */
     @Bean
     public DaoAuthenticationProvider authProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
